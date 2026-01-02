@@ -4,7 +4,7 @@ Geometry cheat sheet made using latex tikzposter package and geogebra
 ## How to work with this project
 geomposter.tex is the main file. Compile with LuaLaTeX
 
-test.tex is a playground for testing the geogebra exported figures
+test.tex is a playground for testing geogebra exported figures
 
 geogebra/ folder contains raw geogebra files (.ggb) as well as .txt files exported from geogebra as PGF/TikZ
 
