@@ -1,0 +1,492 @@
+\documentclass[17pt, a0paper, landscape]{tikzposter} 
+\tikzposterlatexaffectionproofoff 
+
+\usepackage{amsmath,amssymb}
+\usepackage[shortlabels]{enumitem}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage[unicode]{hyperref}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows, calc, intersections, positioning}
+
+% --- تنظیم ابعاد صفحه ---
+\geometry{paperwidth=118.9cm, paperheight=119cm, margin=1cm}
+
+% تنظیم رنگ‌ها
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ulined}{}%
+\DeclareUrlCommand{\bulurl}{\def\UrlFont{\ttfamily\color{blue}\ulined}}
+
+% --- تنظیمات فارسی (باید آخرین بسته باشد) ---
+\usepackage{xepersian}
+\settextfont{XB Niloofar} 
+\setlatintextfont{Liberation Serif}
+\setdigitfont{Yas}
+
+% ============================================================
+% راه حل قطعی برای وسط‌چین کردن عناوین بلوک‌ها در زی‌پرشین
+% ============================================================
+\makeatletter
+% ذخیره دستور اصلی بلوک
+\let\oldblock\block
+% بازتعریف دستور بلوک
+\renewcommand{\block}[2]{%
+    % محاسبه عرض بلوک (تقریبی بر اساس عرض ستون 0.14)
+    % ما متن عنوان را در یک جعبه وسط‌چین (center) قرار می‌دهیم
+    \oldblock{\begin{center}\parbox{14cm}{\centering #1}\end{center}}{#2}%
+}
+\makeatother
+% ============================================================
+
+% تعریف رنگ‌های پوستر
+\definecolorpalette{PurpleGrayBlue}{
+    \definecolor{colorOne}{HTML}{D40279}
+    \definecolor{colorTwo}{HTML}{7F8897}
+    \definecolor{colorThree}{HTML}{006C9E}
+}
+
+% تنظیمات عنوان اصلی
+\settitle{\centering \@title}
+\title{\textcolor[HTML]{D40279}{\textbf{\Huge{آمادگی برای آزمون ریاضی: هندسه مسطحه}}}}
+
+\makeatletter
+\newcommand\insertlogoi[2][]{\def\@insertlogoi{\includegraphics[#1]{#2}}}
+\newcommand\insertlogoii[2][]{\def\@insertlogoii{\includegraphics[#1]{#2}}}
+\newlength\LogoSep
+\setlength\LogoSep{0pt}
+
+\insertlogoi[width=10cm]{figures/logo.pdf} 
+\insertlogoii[width=5cm]{example-image-b}
+
+\renewcommand\maketitle[1][]{  
+    \normalsize
+    \setkeys{title}{#1}
+    \node[transparent,inner sep=\TP@titleinnersep, line width=\TP@titlelinewidth, anchor=north, minimum width=\TP@visibletextwidth-2\TP@titleinnersep]
+        (TP@title) at ($(0, 0.5\textheight-\TP@titletotopverticalspace)$) {\parbox{\TP@titlewidth-2\TP@titleinnersep}{\TP@maketitle}};
+    \draw let \p1 = ($(TP@title.north)-(TP@title.south)$) in node {
+        \setlength{\TP@titleheight}{\y1}
+        \setlength{\titleheight}{\y1}
+        \global\TP@titleheight=\TP@titleheight
+        \global\titleheight=\titleheight
+    };
+
+    \setlength{\titleposleft}{-0.5\titlewidth}
+    \setlength{\titleposright}{\titleposleft+\titlewidth}
+    \setlength{\titlepostop}{0.5\textheight-\TP@titletotopverticalspace}
+    \setlength{\titleposbottom}{\titlepostop-\titleheight}
+
+    \TP@titlestyle
+
+    \node[inner sep=\TP@titleinnersep, line width=\TP@titlelinewidth, anchor=north, minimum width=\TP@visibletextwidth-2\TP@titleinnersep]
+        at (0,0.5\textheight-\TP@titletotopverticalspace)
+        (title)
+        {\parbox{\TP@titlewidth-2\TP@titleinnersep}{\begin{center}\TP@maketitle\end{center}}}; 
+
+    \node[inner sep=400pt,anchor=west] 
+      at ([xshift=-\LogoSep]title.west)
+      {\@insertlogoi};
+
+    \node[inner sep=400pt,anchor=east] 
+      at ([xshift=\LogoSep]title.east)
+      {\Huge\bulurl{https://plucik.ru/}};
+
+    \normalsize
+    \setlength{\TP@blocktop}{\titleposbottom-\TP@titletoblockverticalspace}
+}
+\makeatother
+
+\usetheme{Simple}
+\colorlet{titlebgcolor}{white}
+\usetitlestyle{Default}
+\useblockstyle{TornOut}
+
+% علامت توازی
+\newcommand{\parallelsum}{\mathbin{\|}}
+
+\begin{document}
+
+\begin{RTL}
+
+% تعریف رنگ‌ها برای تصاویر
+\definecolor{atfczz}{rgb}{0,0.6,0}
+\definecolor{fruycc}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+\definecolor{qqwuqq}{rgb}{0,0.6,0}
+\definecolor{ududff}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+\definecolor{qqqqff}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+\definecolor{atfcqq}{rgb}{0,0.6,0}
+\definecolor{xdxdff}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+\definecolor{duqsxz}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+
+\maketitle
+
+\begin{columns}
+% ستون اول (راست)
+\column{0.14}
+\block{قضیه تالس}
+{
+$$l_1 \ \parallelsum \ l_2 \ \parallelsum \ l_3 \iff \frac {a} {a'} = \frac {b} {b'} = \frac {c} {c'}$$
+\begin{center}
+\begin{latin}
+\input{figures/thales_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{نقطه برخورد میانه‌ها}
+{
+$$\frac {CO} {OM} = \frac {AO} {OD} = \frac {BO} {OE} = \frac {2} {1}$$
+\begin{center}
+\begin{latin}
+\input{figures/median_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{ویژگی خاص ذوزنقه}
+{
+\begin{center}
+$F, M$ وسطِ قاعده‌های ذوزنقه $ABCD$\\
+$\Rightarrow$ نقاط $E, F, M$ هم‌خط هستند \\
+\begin{latin}
+\input{figures/trapezoid_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{قضیه فیثاغورس}
+{
+$$\Delta ABC \text{ قائم‌الزاویه } \iff a^2 + b^2 = c^2$$
+\begin{center}
+\begin{latin}
+\input{figures/pythagoras_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{ارتفاع در مثلث قائم‌الزاویه}
+{
+$$h^2 = x \cdot y$$
+\begin{center}
+\begin{latin}
+\input{figures/h_right_plain.tex}
+\end{latin}
+\end{center}
+}
+
+% ستون دوم
+\column{0.14}
+\block{قضیه سینوس‌ها}
+{
+$$\frac {a} {\sin{\alpha}} = \frac {b} {\sin{\beta}} = \frac {c} {\sin{\gamma}} = 2R$$
+\begin{center}
+\begin{latin}
+\input{figures/sin_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{قضیه کسینوس‌ها}
+{
+$$c^2 = a^2 + b^2 - 2ab\cdot\cos{\gamma}$$
+\begin{center}
+\begin{latin}
+\input{figures/cos_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{قضیه منلائوس}
+{
+$$\frac {AN} {NB} \cdot \frac {BM} {MC} \cdot \frac {CK} {KA} = 1$$
+\begin{center}
+\begin{latin}
+\input{figures/menelai_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{قضیه سوا (Ceva)}
+{
+$$\frac {AM} {MB} \cdot \frac {BN} {NC} \cdot \frac {CK} {KA} = 1$$
+\begin{center}
+\begin{latin}
+\input{figures/cheva_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{قضیه وان اوبل}
+{
+$$\frac {BO} {OK} = \frac {BN} {NC} + \frac {BM} {MA}$$
+\begin{center}
+\begin{latin}
+\input{figures/van-obel_plain.tex}
+\end{latin}
+\end{center}
+}
+
+% ستون سوم
+\column{0.14}
+\block{قضیه نیمساز}
+{
+$$\frac {a} {b} = \frac {x} {y}$$
+\begin{center}
+\begin{latin}
+\input{figures/bisector_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{مساحت مثلث}
+{
+$$S_\Delta = \frac 1 2 \cdot ah = \frac 1 2 \cdot ab \cdot \sin{\alpha}$$
+\begin{center}
+\begin{latin}
+\input{figures/triangle_area_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{فرمول هرون}
+{
+$$p = \frac {a + b + c} {2},$$
+$$S_\Delta = \sqrt{p(p-a)(p-b)(p-c)}$$
+\vspace{0.5cm}
+\begin{center}
+\begin{latin}
+\input{figures/geron_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{مساحت ذوزنقه}
+{
+$$S_{ABCD} = \frac {AD + BC} {2}\cdot h$$
+\begin{center}
+\begin{latin}
+\input{figures/trapezoid_area_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{مساحت چهارضلعی}
+{
+$$S_{ABCD} = \frac 1 2 \cdot AC \cdot BD \cdot \sin{\alpha}$$
+\begin{center}
+\begin{latin}
+\input{figures/4p_area_plain.tex}
+\end{latin}
+\end{center}
+}
+
+% ستون چهارم
+\column{0.14}
+\block{نسبت مساحت‌ها}
+{
+(با زاویه مشترک)
+$$\frac {S_{\Delta ABC}} {S_{\Delta ADE}} = \frac {AB} {AD} \cdot \frac {AC} {AE}$$
+\begin{center}
+\begin{latin}
+\input{figures/area_frac_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{زوایای محاطی}
+{
+$$\angle{AEB} = \angle{ADB} = \frac 1 2 \smallsmile{AB}$$
+\begin{center}
+\begin{latin}
+\input{figures/duga_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{زاویه مماس و وتر}
+{
+$$\angle{ABC} = \angle{ADB} = \frac 1 2 \smallsmile{AB}$$
+\begin{center}
+\begin{latin}
+\input{figures/kas_angle_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{زاویه بین دو وتر}
+{
+$$\angle{AKB} = \angle{EKD} = \frac {\smallsmile{AB} \ + \smallsmile{ED}} {2}$$
+\begin{center}
+\begin{latin}
+\input{figures/chord_angle_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{زاویه بین دو قاطع}
+{
+$$\angle{BAC} = \frac {\smallsmile {DE} \ - \smallsmile{BC}} {2}$$
+\begin{center}
+\begin{latin}
+\input{figures/sec_angle_plain.tex}
+\end{latin}
+\end{center}
+}
+
+% ستون پنجم
+\column{0.14}
+\block{زوایا در خطوط موازی}
+{
+$$k \ \parallelsum \ l \iff \alpha = \beta = \gamma$$
+\begin{center}
+\begin{latin}
+\input{figures/parallel_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{دو مماس از یک نقطه}
+{
+$$AB = AC$$
+\begin{center}
+\begin{latin}
+\input{figures/2kas_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{رابطه مماس و قاطع}
+{
+$$\Delta ABC \sim \Delta ADB, \quad AB^2 = AC \cdot AD$$
+\begin{center}
+\begin{latin}
+\input{figures/kas_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{وترهای متقاطع}
+{
+$$\Delta AKB \sim \Delta EKD, \quad AK \cdot KD = BK \cdot KE$$
+\vspace{0.5cm}
+\begin{center}
+\begin{latin}
+\input{figures/chord_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{رابطه دو قاطع}
+{
+$$\Delta ABC \sim \Delta ADE, \quad AB \cdot AD = AC \cdot AE$$
+\begin{center}
+\begin{latin}
+\input{figures/sec_plain.tex}
+\end{latin}
+\end{center}
+}
+
+% ستون ششم
+\column{0.14}
+\block{دایره محاطی مثلث}
+{
+\begin{center}
+مرکز: محل برخورد نیمسازهای داخلی \\
+\vspace{0.5cm}
+\begin{latin}
+\input{figures/cvt_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{دایره محیطی مثلث}
+{
+\begin{center}
+مرکز: محل برخورد عمودمنصف‌ها \\
+\vspace{0.5cm}
+\begin{latin}
+\input{figures/cot_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{محیطی (مثلث قائم‌الزاویه)}
+{
+\begin{center}
+$\Delta ABC$ قائم‌الزاویه $\iff AC$ قطر است،\\
+AO = OC = OB = R\\
+\vspace{0.5cm}
+\begin{latin}
+\input{figures/ort_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{چهارضلعی محاطی}
+{
+\begin{center}
+$ABCD$ محاطی $\iff \alpha + \beta = 180^\circ$\\
+\vspace{0.5cm}
+\begin{latin}
+\input{figures/v4_plain.tex}
+\end{latin}
+\end{center}
+}
+\block{چهارضلعی محیطی}
+{
+\begin{center}
+$ABCD$ محیطی $\iff AB + CD = BC + AD$\\
+\vspace{0.5cm}
+\begin{latin}
+\input{figures/o4_plain.tex}
+\end{latin}
+\end{center}
+}
+
+% ستون هفتم (موارد اضافه شده)
+\column{0.14}
+
+\block{قضیه استوارت}
+{
+$$b^2m + c^2n = a(d^2 + mn)$$
+\begin{center}
+\begin{latin} 
+\input{figures/stewart.tex}
+\end{latin}
+\end{center}
+}
+
+\block{قضیه بطلمیوس}
+{
+$$AC \cdot BD = AB \cdot CD + BC \cdot DA$$
+\begin{center}
+\begin{latin}
+\input{figures/ptolemy.tex}
+\end{latin}
+\end{center}
+}
+
+\block{طول میانه}
+{
+$$m_a^2 = \frac{2b^2 + 2c^2 - a^2}{4}$$
+\begin{center}
+\begin{latin}
+\input{figures/median.tex}
+\end{latin}
+\end{center}
+}
+
+\block{طول نیمساز}
+{
+$$l_a^2 = bc - mn$$
+\begin{center}
+\begin{latin}
+\input{figures/bisector.tex}
+\end{latin}
+\end{center}
+}
+
+\block{خط اویلر}
+{
+\begin{center}
+$H, G, O$ هم‌خط هستند و $HG = 2GO$\\
+\vspace{0.5cm}
+\begin{latin}
+\input{figures/euler.tex}
+\end{latin}
+\end{center}
+}
+
+\block{خط سیمسون}
+{
+\begin{center}
+پای عمودهای وارد بر اضلاع از نقطه‌ای روی دایره محیطی، هم‌خط هستند.\\
+\vspace{0.5cm}
+\begin{latin}
+\input{figures/simson.tex}
+\end{latin}
+\end{center}
+}
+
+\end{columns}
+\end{RTL}
+\end{document}

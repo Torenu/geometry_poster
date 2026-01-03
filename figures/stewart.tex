@@ -1,0 +1,26 @@
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm, every node/.style={scale=0.8}]
+% Triangle Nodes
+\coordinate (B) at (0,0);
+\coordinate (C) at (6,0);
+\coordinate (A) at (2,3.5);
+\coordinate (D) at (3.5,0);
+
+% Draw
+\draw [line width=2pt] (A) -- (B) -- (C) -- cycle;
+\draw [line width=2pt, color=blue] (A) -- (D);
+
+% Labels
+\node [above] at (A) {$A$};
+\node [below left] at (B) {$B$};
+\node [below right] at (C) {$C$};
+\node [below] at (D) {$D$};
+
+% Segment Labels
+\node [left] at (1,1.75) {$c$};
+\node [right] at (4,1.75) {$b$};
+\node [below] at (1.75,0) {$m$};
+\node [below] at (4.75,0) {$n$};
+\node [right, color=blue] at (2.6,1.5) {$d$};
+
+\foreach \point in {A,B,C,D} \fill [color=black] (\point) circle (3pt);
+\end{tikzpicture}

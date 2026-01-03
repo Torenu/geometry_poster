@@ -1,0 +1,41 @@
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm, every node/.style={scale=0.7}]
+\coordinate (O) at (0,0);
+\draw [gray!40, thick] (O) circle (2cm);
+
+% رئوس
+\coordinate (A) at (110:2cm);
+\coordinate (B) at (210:2cm);
+\coordinate (C) at (-30:2cm);
+\coordinate (P) at (-80:2cm);
+
+% رسم مثلث
+\draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+
+% محاسبه پای عمودها
+\coordinate (F_BC) at ($(B)!(P)!(C)$);
+\coordinate (F_AC) at ($(A)!(P)!(C)$);
+\coordinate (F_AB) at ($(A)!(P)!(B)$);
+
+% رسم خط سیمسون (قرمز ضخیم)
+\draw [line width=2.5pt, color=red] (F_AB) -- (F_AC) -- (F_BC);
+
+% خط‌چین‌های راهنما
+\draw [dotted, blue, thick] (P) -- (F_BC);
+\draw [dotted, blue, thick] (P) -- (F_AC);
+\draw [dotted, blue, thick] (P) -- (F_AB);
+
+% امتداد اضلاع (برای اینکه پای عمود روی هوا نباشد)
+\draw [dashed, gray] (A) -- ($(A)!1.5!(F_AB)$);
+\draw [dashed, gray] (C) -- ($(C)!1.2!(F_AC)$);
+
+% نقاط
+\fill [red] (F_BC) circle (2pt);
+\fill [red] (F_AC) circle (2pt);
+\fill [red] (F_AB) circle (2pt);
+\fill [blue] (P) circle (2.5pt) node[below] {$P$};
+
+\node at (A) [above] {$A$};
+\node at (B) [left] {$B$};
+\node at (C) [right] {$C$};
+
+\end{tikzpicture}

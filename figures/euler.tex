@@ -1,0 +1,64 @@
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm, every node/.style={scale=0.7}]
+% مختصات رئوس
+\coordinate (A) at (-1, 3);
+\coordinate (B) at (-2, -2);
+\coordinate (C) at (4, -2);
+
+% --- محاسبه نقاط اصلی ---
+% 1. مرکز ارتفاعی (H)
+\coordinate (H) at (-1, -1);
+% 2. مرکز ثقل (G)
+\coordinate (G) at (0.333, -0.333);
+% 3. مرکز دایره محیطی (O)
+\coordinate (O) at (1, 0);
+
+% --- محاسبه نقاط کمکی برای رسم خطوط ---
+% وسط اضلاع (برای میانه و عمودمنصف)
+\coordinate (M_BC) at ($(B)!0.5!(C)$);
+\coordinate (M_AC) at ($(A)!0.5!(C)$);
+\coordinate (M_AB) at ($(A)!0.5!(B)$);
+
+% پای ارتفاع‌ها (برای ارتفاع)
+\coordinate (H_A) at ($(B)!(A)!(C)$);
+\coordinate (H_B) at ($(A)!(B)!(C)$);
+\coordinate (H_C) at ($(A)!(C)!(B)$);
+
+
+% --- رسم خطوط سازنده (کمرنگ) ---
+
+% 1. رسم ارتفاع‌ها (Altitudes) -> سازنده نقطه H
+% استایل: خط‌چین خاکستری
+\draw [dashed, thin, gray!80] (A) -- (H_A);
+\draw [dashed, thin, gray!80] (B) -- (H_B);
+\draw [dashed, thin, gray!80] (C) -- (H_C);
+
+% 2. رسم میانه‌ها (Medians) -> سازنده نقطه G
+% استایل: نقطه‌چین نارنجی متراکم
+\draw [densely dotted, thick, orange!80] (A) -- (M_BC);
+\draw [densely dotted, thick, orange!80] (B) -- (M_AC);
+\draw [densely dotted, thick, orange!80] (C) -- (M_AB);
+
+% 3. رسم عمودمنصف‌ها (Perpendicular Bisectors) -> سازنده نقطه O
+% استایل: خط‌چین آبی کم‌رنگ (از وسط ضلع به سمت O وصل می‌کنیم)
+\draw [dashdotted, thin, cyan!80] (M_BC) -- (O);
+\draw [dashdotted, thin, cyan!80] (M_AC) -- (O);
+\draw [dashdotted, thin, cyan!80] (M_AB) -- (O);
+
+
+% --- رسم اجزای اصلی ---
+% رسم مثلث اصلی
+\draw [line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+
+% رسم خط اویلر (قرمز ضخیم)
+\draw [line width=2.5pt, color=red] (-1.4, -1.2) -- (1.4, 0.2);
+
+% --- رسم نقاط و نام‌گذاری ---
+\fill [color=black] (H) circle (2.5pt) node[below left, scale=0.9] {$H$};
+\fill [color=black] (G) circle (2.5pt) node[above right, scale=0.9] {$G$};
+\fill [color=black] (O) circle (2.5pt) node[above, scale=0.9] {$O$};
+
+\node at (A) [above] {$A$};
+\node at (B) [below left] {$B$};
+\node at (C) [below right] {$C$};
+
+\end{tikzpicture}

@@ -1,0 +1,27 @@
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm, every node/.style={scale=0.8}]
+% Circle
+\draw [line width=2pt, color=gray!50] (0,0) circle (3cm);
+
+% Coordinates on circle
+\coordinate (A) at (130:3);
+\coordinate (B) at (50:3);
+\coordinate (C) at (-30:3);
+\coordinate (D) at (-150:3);
+
+% Draw Quadrilateral
+\draw [line width=2pt] (A) -- (B) -- (C) -- (D) -- cycle;
+
+% Draw Diagonals
+\draw [line width=2pt, dashed, color=red] (A) -- (C);
+\draw [line width=2pt, dashed, color=red] (B) -- (D);
+
+% Labels
+\node [above left] at (A) {$A$};
+\node [above right] at (B) {$B$};
+\node [below right] at (C) {$C$};
+\node [below left] at (D) {$D$};
+
+% Points
+\foreach \point in {A,B,C,D}
+\fill [color=blue] (\point) circle (3pt);
+\end{tikzpicture}

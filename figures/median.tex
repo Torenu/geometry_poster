@@ -1,0 +1,26 @@
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm, every node/.style={scale=0.8}]
+% Triangle
+\coordinate (B) at (0,0);
+\coordinate (C) at (6,0);
+\coordinate (A) at (2,4);
+\coordinate (M) at (3,0); % Midpoint
+
+% Draw
+\draw [line width=2pt] (A) -- (B) -- (C) -- cycle;
+\draw [line width=2pt, color=green!60!black] (A) -- (M);
+
+% Tick marks for midpoint
+\draw [line width=1.5pt] (1.5, -0.2) -- (1.5, 0.2);
+\draw [line width=1.5pt] (4.5, -0.2) -- (4.5, 0.2);
+
+% Labels
+\node [above] at (A) {$A$};
+\node [below left] at (B) {$B$};
+\node [below right] at (C) {$C$};
+\node [below] at (M) {$M$};
+\node [right, color=green!60!black] at (2.5, 2) {$m_a$};
+
+% Points
+\foreach \point in {A,B,C,M}
+\fill [color=black] (\point) circle (3pt);
+\end{tikzpicture}
