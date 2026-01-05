@@ -1,0 +1,400 @@
+\documentclass[17pt, a0paper, landscape]{tikzposter} % See Section 3
+\tikzposterlatexaffectionproofoff % disable watermark
+
+%\usepackage[T2A]{fontenc} %used for cyrillic font
+\usepackage[T1]{fontenc} % used for western fonts
+\usepackage[utf8]{inputenc}
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+%\setotherlanguage{english}
+\setotherlanguage{italian} % added italian language
+%\setkeys{russian}{babelshorthands=true}
+
+\usepackage{amsmath,amssymb}
+\usepackage[shortlabels]{enumitem}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{parskip}
+\usepackage[unicode]{hyperref}
+\AddEnumerateCounter{\asbuk}{\russian@asbuk@alph}{}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+
+% \bulurl command to make blue hyperlink
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ulined}{}%
+\DeclareUrlCommand{\bulurl}{\def\UrlFont{\ttfamily\color{blue}\ulined}}
+
+% changing font
+\usepackage{PTSans}
+
+\setmainfont{PT Sans}
+\setromanfont{PT Sans} 
+\setsansfont{PT Sans} 
+\setmonofont{Consolas} 
+
+\newfontfamily{\cyrillicfont}{PT Sans} 
+\newfontfamily{\cyrillicfontrm}{PT Sans}
+\newfontfamily{\cyrillicfonttt}{PT Sans}
+\newfontfamily{\cyrillicfontsf}{PT Sans}
+
+\usepackage{unicode-math}
+\setmathfont{Fira Math}
+
+% define tikzposter colors (mainly 1st one)
+\definecolorpalette{PurpleGrayBlue}{
+    \definecolor{colorOne}{HTML}{D40279}
+    \definecolor{colorTwo}{HTML}{7F8897}
+    \definecolor{colorThree}{HTML}{006C9E}
+}
+
+% custom title configuration
+\settitle{\centering \@title}
+%\title{\textcolor[HTML]{D40279}{\textbf{\Huge{Preparation for the State Exam in Mathematics: Plane Geometry}}}}
+%\title{\textcolor[HTML]{D40279}{\textbf{\Huge{Preparazione per  l'esame di stato in matematica: Geometria Piana}}}} - literal translation
+\title{\textcolor[HTML]{D40279}{\textbf{\Huge{Preparazione per la verifica di matematica: Geometria Piana}}}} % terms most common used in italy
+
+
+% the following bit of code adds logo blocks on the left and right to the title
+\makeatletter
+\newcommand\insertlogoi[2][]{\def\@insertlogoi{\includegraphics[#1]{#2}}}
+\newcommand\insertlogoii[2][]{\def\@insertlogoii{\includegraphics[#1]{#2}}}
+\newlength\LogoSep
+\setlength\LogoSep{0pt}
+
+\insertlogoi[width=10cm]{figures/logo.pdf}
+\insertlogoii[width=5cm]{example-image-b} % I inserted my hyperlink instead of the logo on the right so this line is not used
+
+\renewcommand\maketitle[1][]{  % #1 keys
+    \normalsize
+    \setkeys{title}{#1}
+    % Title dummy to get title height
+    \node[transparent,inner sep=\TP@titleinnersep, line width=\TP@titlelinewidth, anchor=north, minimum width=\TP@visibletextwidth-2\TP@titleinnersep]
+        (TP@title) at ($(0, 0.5\textheight-\TP@titletotopverticalspace)$) {\parbox{\TP@titlewidth-2\TP@titleinnersep}{\TP@maketitle}};
+    \draw let \p1 = ($(TP@title.north)-(TP@title.south)$) in node {
+        \setlength{\TP@titleheight}{\y1}
+        \setlength{\titleheight}{\y1}
+        \global\TP@titleheight=\TP@titleheight
+        \global\titleheight=\titleheight
+    };
+
+    % Compute title position
+    \setlength{\titleposleft}{-0.5\titlewidth}
+    \setlength{\titleposright}{\titleposleft+\titlewidth}
+    \setlength{\titlepostop}{0.5\textheight-\TP@titletotopverticalspace}
+    \setlength{\titleposbottom}{\titlepostop-\titleheight}
+
+    % Title style (background)
+    \TP@titlestyle
+
+    % Title node
+    \node[inner sep=\TP@titleinnersep, line width=\TP@titlelinewidth, anchor=north, minimum width=\TP@visibletextwidth-2\TP@titleinnersep]
+        at (0,0.5\textheight-\TP@titletotopverticalspace)
+        (title)
+        {\parbox{\TP@titlewidth-2\TP@titleinnersep}{\TP@maketitle}};
+
+    \node[inner sep=400pt,anchor=west] 
+      at ([xshift=-\LogoSep]title.west)
+      {\@insertlogoi};
+
+    \node[inner sep=400pt,anchor=east] 
+      at ([xshift=\LogoSep]title.east)
+      {\Huge\bulurl{https://plucik.ru/}}; %\@insertlogoii if you want to have 2nd logo on the right
+
+    % Settings for blocks
+    \normalsize
+    \setlength{\TP@blocktop}{\titleposbottom-\TP@titletoblockverticalspace}
+}
+\makeatother
+\usetheme{Simple} % See Section 5
+\colorlet{titlebgcolor}{white}
+\usetitlestyle{Default}
+\useblockstyle{TornOut}
+
+% parallel sign
+\newcommand{\parallelsum}{\mathbin{\|}}
+
+\begin{document}
+
+% define colors for geogebra imported tikz images
+\definecolor{atfczz}{rgb}{0,0.6,0}
+\definecolor{fruycc}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+\definecolor{qqwuqq}{rgb}{0,0.6,0}
+\definecolor{ududff}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+\definecolor{qqqqff}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+\definecolor{atfcqq}{rgb}{0,0.6,0}
+\definecolor{xdxdff}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+\definecolor{duqsxz}{rgb}{0.8313725490196079,0.00784313725490196,0.4745098039215686}
+
+\maketitle
+
+% main body of the document, pretty straightforward
+\begin{columns}
+	\column{0.166}
+	%\block{Thales' Theorem}
+	\block{Teorema di Talete}
+	{
+		$$l_1 \ \parallelsum \ l_2 \ \parallelsum \ l_3 \iff \frac {a} {a'} = \frac {b} {b'} = \frac {c} {c'}$$
+		\begin{center}
+			\input{figures/thales_plain.tex}
+		\end{center}
+	}
+	%\block{Centroid of a Triangle}
+	\block{Baricentro di un Triangolo}
+	{
+		$$\frac {CO} {OM} = \frac {AO} {OD} = \frac {BO} {OE} = \frac {2} {1}$$
+		\begin{center}
+			\input{figures/median_plain.tex}
+		\end{center}
+	}
+	%\block{Remarkable Property of a Trapezoid}
+	\block{Proprietà Notevoli di un Trapezio}
+	{
+		\begin{center}
+			$F, M$ - punti medi delle basi del Trapezio $ABCD$\\
+			$\Rightarrow$ i punti $E, F, M$ giacciono sulla stessa linea \\
+			\input{figures/trapezoid_plain.tex}
+		\end{center}
+	}
+	%\block{Pythagorean Theorem}
+	\block{Teorema di Pitagora}
+	{
+		$$\Delta ABC \text{ - Angolo Retto } \iff a^2 + b^2 = c^2$$
+		\begin{center}
+			\input{figures/pythagoras_plain.tex}
+		\end{center}
+	}
+	%\block{Altitude in a Right Triangle}
+	\block{Altezza di un Triangolo Rettangolo}
+	{
+		$$h^2 = x \cdot y$$
+		\begin{center}
+			\input{figures/h_right_plain.tex}
+		\end{center}
+	}
+	
+	\column{0.166}
+	%\block{Law of Sines}
+	\block{Teorema dei Seni}
+	{
+		$$\frac {a} {\sin{\alpha}} = \frac {b} {\sin{\beta}} = \frac {c} {\sin{\gamma}} = 2R$$
+		\begin{center}
+			\input{figures/sin_plain.tex}
+		\end{center}
+	}
+	%\block{Law of Cosines}
+	\block{Teorema dei Coseni}
+	{
+		$$c^2 = a^2 + b^2 - 2ab\cdot\cos{\gamma}$$
+		\begin{center}
+			\input{figures/cos_plain.tex}
+		\end{center}
+	}
+	%\block{Menelaus' Theorem}
+	\block{Teorema di Menelao}
+	{
+		$$\frac {AN} {NB} \cdot \frac {BM} {MC} \cdot \frac {CK} {KA} = 1$$
+		\begin{center}
+			\input{figures/menelai_plain.tex}
+		\end{center}
+	}
+	%\block{Ceva's Theorem}
+	\block{Terorema di Ceva}
+	{
+		$$\frac {AM} {MB} \cdot \frac {BN} {NC} \cdot \frac {CK} {KA} = 1$$
+		\begin{center}
+			\input{figures/cheva_plain.tex}
+		\end{center}
+	}
+	%\block{Van Aubel's Theorem}
+	\block{Terorema di Van Aubel}
+	{
+		$$\frac {BO} {OK} = \frac {BN} {NC} + \frac {BM} {MA}$$
+		\begin{center}
+			\input{figures/van-obel_plain.tex}
+		\end{center}
+	}
+	
+	\column{0.166}
+	%\block{Angle Bisector Theorem}
+	\block{Teorema della Bisettrice}
+	{
+		$$\frac {a} {b} = \frac {x} {y}$$
+		\begin{center}
+			\input{figures/bisector_plain.tex}
+		\end{center}
+	}
+	%\block{Area of a Triangle}
+	\block{Area di un Triangolo}
+	{
+		$$S_\Delta = \frac 1 2 \cdot ah = \frac 1 2 \cdot ab \cdot \sin{\alpha}$$
+		\begin{center}
+			\input{figures/triangle_area_plain.tex}
+		\end{center}
+	}
+	%\block{Heron's Formula}
+	\block{Formula di Erone}
+	{
+		$$p = \frac {a + b + c} {2},$$
+		$$S_\Delta = \sqrt{p(p-a)(p-b)(p-c)}$$
+		\vspace{0.5cm}
+		\begin{center}
+			\input{figures/geron_plain.tex}
+		\end{center}
+	}
+	%\block{Area of a Trapezoid}
+	\block{Area di un Trapezio}
+	{
+		$$S_{ABCD} = \frac {AD + BC} {2}\cdot h$$
+		\begin{center}
+			\input{figures/trapezoid_area_plain.tex}
+		\end{center}
+	}
+	%\block{Area of a Quadrilateral}
+	\block{Area di un Quadrilatero}
+	{
+		$$S_{ABCD} = \frac 1 2 \cdot AC \cdot BD \cdot \sin{\alpha}$$
+		\begin{center}
+			\input{figures/4p_area_plain.tex}
+		\end{center}
+	}
+	
+	\column{0.166}
+	%\block{Ratio of the Areas of Two Triangles with a Common Angle}
+	\block{Teorema sul rapporto delle aree di due triangoli aventi gli stessi angoli (triangoli simili)}
+	{
+		$$\frac {S_{\Delta ABC}} {S_{\Delta ADE}} = \frac {AB} {AD} \cdot \frac {AC} {AE}$$
+		\begin{center}
+			\input{figures/area_frac_plain.tex}
+		\end{center}
+	}
+	%\block{Inscribed Angle Theorem}
+	\block{Teorema dell'Angolo Inscritto}
+	{
+		$$\angle{AEB} = \angle{ADB} = \frac 1 2 \smallsmile{AB}$$
+		\begin{center}
+			\input{figures/duga_plain.tex}
+		\end{center}
+	}
+	%\block{Angle Between a Tangent and a Chord}
+	\block{Angolo tra una tangente e una corda}
+	{
+		$$\angle{ABC} = \angle{ADB} = \frac 1 2 \smallsmile{AB}$$
+		\begin{center}
+			\input{figures/kas_angle_plain.tex}
+		\end{center}
+	}
+	%\block{Angle Formed by Two Chords}
+	\block{Angolo formato da due corde}
+	{
+		$$\angle{AKB} = \angle{EKD} = \frac {\smallsmile{AB} \ + \smallsmile{ED}} {2}$$
+		\begin{center}
+			\input{figures/chord_angle_plain.tex}
+		\end{center}
+	}
+	%\block{Angle Formed by Two Secants}
+	\block{Angolo formaro da due Secanti}
+	{
+		$$\angle{BAC} = \frac {\smallsmile {DE} \ - \smallsmile{BC}} {2}$$
+		\begin{center}
+			\input{figures/sec_angle_plain.tex}
+		\end{center}
+	}
+	
+	\column{0.166}
+	%\block{Angles Formed by Parallel Lines and a Transversal}
+	\block{Angoli formati da linee parallele e da una secante}
+	{
+		$$k \ \parallelsum \ l \iff \alpha = \beta = \gamma$$
+		\begin{center}
+			\input{figures/parallel_plain.tex}
+		\end{center}
+	}
+	%\block{Tangent Segments from a Common External Point}
+	\block{Segmenti tangenti da un punto esterno comune}
+	{
+		$$AB = AC$$
+		\begin{center}
+			\input{figures/2kas_plain.tex}
+		\end{center}
+	}
+	%\block{Tangent--Secant Theorem}
+	\block{Teorema delle Tangenti delle Secanti}
+	{
+		$$\Delta ABC \sim \Delta ADB, \quad AB^2 = AC \cdot AD$$
+		\begin{center}
+			\input{figures/kas_plain.tex}
+		\end{center}
+	}
+	%\block{Intersecting Chords Theorem}
+	\block{Teorema delle Corde Secanti}
+	{
+		$$\Delta AKB \sim \Delta EKD, \quad AK \cdot KD = BK \cdot KE$$
+		\vspace{0.5cm}
+		\begin{center}
+			\input{figures/chord_plain.tex}
+		\end{center}
+	}
+	%\block{Secant--Secant Theorem}
+	\block{Terorema delle Secanti}
+	{
+		$$\Delta ABC \sim \Delta ADE, \quad AB \cdot AD = AC \cdot AE$$
+		\begin{center}
+			\input{figures/sec_plain.tex}
+		\end{center}
+	}
+	
+	\column{0.166}
+	%\block{Incenter of a Triangle}
+	\block{Incentro di un Triangolo}
+	{
+		\begin{center}
+			L'incentro, ottenuto dall'incrocio delle bisettrici, è sempre interno. È un punto equidistante da tutti i lati ed è il centro del cerchio inscritto \\
+			\vspace{0.5cm}
+			\input{figures/cvt_plain.tex}
+		\end{center}
+	}
+	%\block{Circumcenter of a Triangle}
+	\block{Circocentro di un Triangolo}
+	{
+		\begin{center}
+			Il circocentro, ottenuto dall'incrocio degli assi,è equidistante dai vertici ed è il centro del cerchio circoscritto \\
+			\vspace{0.5cm}
+			\input{figures/cot_plain.tex}
+		\end{center}
+	}
+	%\block{Circumcircle of a Right Triangle}
+	\block{Circonferenza circoscritta a un Triangolo Rettangolo}
+	{
+		\begin{center}
+			$\Delta ABC$ - Triangolo Rettangolo $\iff$ $AC$ - diametro,\\
+			AO = OC = OB = R\\
+			\vspace{0.5cm}
+			\input{figures/ort_plain.tex}
+		\end{center}
+	}
+	%\block{Cyclic Quadrilateral}
+	\block{Quadrilatero Ciclico}
+	{
+		\begin{center}
+			$ABCD$ - inscritto $\iff \alpha + \beta = 180^\circ$\\
+			\vspace{0.5cm}
+			\input{figures/v4_plain.tex}
+		\end{center}
+	}
+	%\block{Tangential Quadrilateral}
+	\block{Quadrilatico Circoscritto}
+	{
+		\begin{center}
+			$ABCD$ - circoscritto $\iff AB + CD = BC + AD$\\
+			\vspace{0.5cm}
+			\input{figures/o4_plain.tex}
+		\end{center}
+	}
+	
+\end{columns}
+
+\end{document}
