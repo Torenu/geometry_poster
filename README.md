@@ -1,8 +1,15 @@
 # geometry_poster
 Geometry cheat sheet made using latex tikzposter package and geogebra
 
+## Languages available
+
+* ru - Russian
+* en - English
+* it - Italian
+* fa - Persian
+
 ## How to work with this project
-geomposter.tex is the main file. Compile with LuaLaTeX
+geomposter.tex is the main file. Compile with XeTeX/LuaLaTeX
 
 test.tex is a playground for testing geogebra exported figures
 
